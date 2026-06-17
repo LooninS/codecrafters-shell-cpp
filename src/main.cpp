@@ -16,7 +16,7 @@ int main() {
     }
     else if (input == "exit") break;
     else if (input.substr(0, 5) == "type ") {
-      std::string shit = " is a builtin";
+      std::string shit = " is a shell builtin";
       if (input.substr(5) == "echo") {
         std::cout << "echo" << shit << std::endl;
       }
