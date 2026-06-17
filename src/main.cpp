@@ -26,10 +26,10 @@ int main() {
       else if (input.substr(5) == "type") {
         std::cout << "type" << shit << std::endl;
       }
-      else std::cout << input.substr(5) << ": command not found" << std::endl;
+      else std::cout << input.substr(5) << ": not found" << std::endl;
     }
     else {
-      std::cout << input << ": not found" << std::endl;
+      std::cout << input << ": command not found" << std::endl;
     }
 
 
