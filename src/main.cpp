@@ -23,6 +23,9 @@ int main() {
       else if (input.substr(5) == "exit") {
         std::cout << "exit" << shit << std::endl;
       }
+      else if (input.substr(5) == "type") {
+        std::cout << "type" << shit << std::endl;
+      }
       else std::cout << input << ": command not found" << std::endl;
     }
     else {
