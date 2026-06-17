@@ -35,7 +35,7 @@ int main() {
     else if (input == "exit") break;
     else if (input == "pwd") {
       fs::path p = fs::current_path();
-      std::cout << std::quoted(p.string()) << std::endl;
+      std::cout << (p.string()) << std::endl;
 
     }
     else if (input.substr(0, 5) == "type ") {
