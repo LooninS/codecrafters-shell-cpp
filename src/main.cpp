@@ -30,6 +30,7 @@ int main() {
       }
       std::string path = getenv("PATH");
       size_t start = 0;
+      int found = 0;
       while (start<=path.size()) {
         size_t end = path.find(':', start);
         std::string dir = path.substr(start, end-start);
@@ -37,13 +38,16 @@ int main() {
         
         if (fs::exists(fullpath) && (fs::status(fullpath).permissions() & fs::perms::owner_exec) != fs::perms::none) {
               std::cout << command << " is "<<fullpath << std::endl;
+              found = 1;
               break;
             }
         if (end == std::string::npos) break;
         start = end+1;
       }
 
-      std::cout << command << ": not found" << std::endl;
+      if (!found) {
+        std::cout << command << ": not found" << std::endl;
+      }
 
     }
     else {
