@@ -4,6 +4,18 @@
 #include <vector>
 #include <unistd.h>
 namespace fs = std::filesystem;
+std::vector<std::string> split(const std::string& s, char delim) {
+    std::vector<std::string> parts;
+    size_t start = 0, end = s.find(delim);
+
+    while (end != std::string::npos) {
+        parts.push_back(s.substr(start, end - start));
+        start = end + 1;
+        end = s.find(delim, start);
+    }
+    parts.push_back(s.substr(start));
+    return parts;
+}
 
 int main() {
   // Flush after every std::cout / std:cerr
@@ -33,20 +45,16 @@ int main() {
 
       if (!found) {
       std::string path = getenv("PATH");
-      size_t start = 0;
       int found = 0;
-      while (start<=path.size()) {
-        size_t end = path.find(':', start);
-        std::string dir = path.substr(start, end-start);
-        std::string fullpath = dir + "/" + command;
+      std::vector<std::string> paths = split(path, ':');
+      for (auto &path : paths) {
+        std::string fullpath = path + "/" + command;
         
         if (fs::exists(fullpath) && (fs::status(fullpath).permissions() & fs::perms::owner_exec) != fs::perms::none) {
               std::cout << command << " is "<<fullpath << std::endl;
               found = 1;
               break;
-            }
-        if (end == std::string::npos) break;
-        start = end+1;
+        }
       }
 
       if (!found) {
@@ -56,9 +64,27 @@ int main() {
 
     }
     else {
-      std::cout << input << ": not found" << std::endl;
+      std::vector<std::string> commands = split(input, ' ');
+      std::string command = commands[0];
+      std::string path = getenv("PATH");
+      int found = 0;
+      std::vector<std::string> paths = split(path, ':');
+      for (auto &path : paths) {
+        std::string fullpath = path + "/" + command;
+        
+        if (fs::exists(fullpath) && (fs::status(fullpath).permissions() & fs::perms::owner_exec) != fs::perms::none) {
+              system(input.c_str());
+              found = 1;
+              break;
+        }
+      }
+
+      if (!found) {
+        std::cout << command << ": not found" << std::endl;
+      }
+
   }
-}
+ }
 }
 
 
