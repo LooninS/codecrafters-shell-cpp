@@ -43,8 +43,13 @@ int main() {
         start = end+1;
       }
 
+      std::cout << command << ": not found" << std::endl;
+
     }
+    else {
+      std::cout << input << ": not found" << std::endl;
   }
+}
 }
 
 
