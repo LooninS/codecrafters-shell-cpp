@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unistd.h>
+namespace fs = std::filesystem;
 
 int main() {
   // Flush after every std::cout / std:cerr
@@ -27,13 +29,20 @@ int main() {
         }
       }
       std::string path = getenv("PATH");
-      std::filesystem::path p(path);
-      for (auto &entry : std::filesystem::directory_iterator(p)) {
-        if (entry.path().filename() == command) {
-          std::cout << input.substr(5) << " is " <<entry.path() << std::endl;
-          break;
-        }
+      size_t start = 0;
+      while (start<=path.size()) {
+        size_t end = path.find(':', start);
+        std::string dir = path.substr(start, end-start);
+        std::string fullpath = dir + "/" + command;
+        
+        if (fs::exists(fullpath) && (fs::status(fullpath).permissions() & fs::perms::owner_exec) != fs::perms::none) {
+              std::cout << command << " is "<<fullpath << std::endl;
+              break;
+            }
+        if (end == std::string::npos) break;
+        start = end+1;
       }
+
     }
   }
 }
