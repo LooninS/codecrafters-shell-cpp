@@ -1,4 +1,5 @@
 #include <filesystem>
+#include <iomanip>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -32,7 +33,11 @@ int main() {
       std::cout << input.substr(5) << std::endl;
     }
     else if (input == "exit") break;
-    else if (input == "pwd") std::cout << fs::current_path()<< std::endl;
+    else if (input == "pwd") {
+      fs::path p = fs::current_path();
+      std::cout << std::quoted(p.string()) << std::endl;
+
+    }
     else if (input.substr(0, 5) == "type ") {
       std::string command = input.substr(5);
       int found = 0;
