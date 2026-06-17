@@ -23,7 +23,7 @@ int main() {
   std::cerr << std::unitbuf;
 
   // TODO: Uncomment the code below to pass the first stage
-  std::vector<std::string> args ={"echo", "exit", "type"};
+  std::vector<std::string> args ={"echo", "exit", "type", "pwd"};
   while (1) {
     std::cout << "$ ";
     std::string input;
@@ -32,6 +32,7 @@ int main() {
       std::cout << input.substr(5) << std::endl;
     }
     else if (input == "exit") break;
+    else if (input == "pwd") std::cout << fs::current_path()<< std::endl;
     else if (input.substr(0, 5) == "type ") {
       std::string command = input.substr(5);
       int found = 0;
