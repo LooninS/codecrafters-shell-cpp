@@ -22,12 +22,16 @@ int main() {
     else if (input == "exit") break;
     else if (input.substr(0, 5) == "type ") {
       std::string command = input.substr(5);
+      int found = 0;
       for (auto &arg : args) {
         if (arg == command) {
           std::cout << command << " is a shell builtin" << std::endl;
+          found = 1;
           break;
         }
       }
+
+      if (!found) {
       std::string path = getenv("PATH");
       size_t start = 0;
       int found = 0;
@@ -48,6 +52,7 @@ int main() {
       if (!found) {
         std::cout << command << ": not found" << std::endl;
       }
+    }
 
     }
     else {
