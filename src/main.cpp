@@ -64,8 +64,7 @@ int main() {
 
     }
     else {
-      std::vector<std::string> commands = split(input, ' ');
-      std::string command = commands[0];
+      std::string command = input.substr(0, input.find(' '));
       std::string path = getenv("PATH");
       int found = 0;
       std::vector<std::string> paths = split(path, ':');
