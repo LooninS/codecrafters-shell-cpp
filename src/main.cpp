@@ -15,6 +15,15 @@ int main() {
       std::cout << input.substr(5) << std::endl;
     }
     else if (input == "exit") break;
+    else if (input.substr(0, 5) == "type ") {
+      if (input.substr(5) == "echo") {
+        std::cout << "echo: built-in command" << std::endl;
+      }
+      else if (input.substr(5) == "exit") {
+        std::cout << "exit: built-in command" << std::endl;
+      }
+      else std::cout << input << ": command not found" << std::endl;
+    }
     else {
       std::cout << input << ": command not found" << std::endl;
     }
